@@ -24,8 +24,8 @@ func (prod *Producer) limit() {
 	}
 }
 
-func parasite(value int, ch chan int) {
-	ch <- value
+func parasite(value int, ch *chan int) {
+	*ch <- value
 }
 
 func main() {
@@ -54,7 +54,7 @@ func main() {
 			go prodTwo.limit()
 		case <-parasiteTicker.C:
 			fmt.Println("Parasite!!! Sends parasite data to prodTwo channel!!!")
-			go parasite(1111111111, prodTwo.ch)
+			go parasite(1111111111, &prodTwo.ch)
 		}
 	}
 }
